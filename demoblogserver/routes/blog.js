@@ -29,6 +29,7 @@ router.get("/viewblog/:blogId", (req, res, next) => {
 /* Blog  için Action Atma */
 router.put("/blogaction/:actionType/:userId/:blogId", (req, res, next) => {
   const { userId, blogId, actionType } = req.params;
+  
   if (actionType < 0 && actionType > 5)
     res.json({ status: false, data: "Action Type Hatalı" });
   Blog.addBlogAction(userId, blogId, actionType)
@@ -56,7 +57,7 @@ router.get("/viewblogaction/:actionType/:blogId", (req, res, next) => {
 /* Blog için comment Atma */
 router.post("/blog/comment", (req, res, next) => {
   const { userId, blogId, comment } = req.body;
-  Blog.addComment(userId, blogId, comment)
+  Blog.addBlogComment(userId, blogId, comment)
     .then(result => {
       res.json(result);
     })

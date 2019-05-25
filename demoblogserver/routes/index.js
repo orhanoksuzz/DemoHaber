@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const MemberDetails = require("../models/MemberDetails");
-const Blog = require("../models/Blog");
-const Media = require("../models/Media");
-const Comments = require("../models/Comments");
+const Admin = require('../functions/index');
 
 router.get("/", (req, res, next) => {
   res.render("index", { title: "Api Anasayfa" });
@@ -11,46 +8,53 @@ router.get("/", (req, res, next) => {
 
 // Tüm Kullanıcılar
 router.get("/allmember", (req, res, next) => {
-  const promise = MemberDetails.find({});
-  promise
+ 
+  Admin.AllMember()
     .then(result => {
-      res.json({ status: true, message: "Başarılı", veri: result });
+      res.json(result);
     })
     .catch(err => {
-      res.json({ status: false, message: err });
+      res.json(err);
     });
 });
 // Tüm Blog Yazıları
 router.get("/allblog", (req, res, next) => {
-  const promise = Blog.find({});
-  promise
-    .then(result => {
-      res.json({ status: true, message: result });
-    })
-    .catch(err => {
-      res.json({ status: false, message: err });
-    });
+  Admin.AllBlog()
+  .then(result => {
+    res.json(result);
+  })
+  .catch(err => {
+    res.json(err);
+  });
 });
 // Tüm Media
 router.get("/allmedia", (req, res, next) => {
-  const promise = Media.find({});
-  promise
+
+  Admin.AllMedia()
     .then(result => {
-      res.json({ status: true, message: result });
+      res.json(result);
     })
     .catch(err => {
-      res.json({ status: false, message: err });
+      res.json(err);
     });
 });
 // Tüm Yorumlar
 router.get("/allcomments", (req, res, next) => {
-  const promise = Comments.find({});
-  promise
+  Admin.AllComments()
     .then(result => {
-      res.json({ status: true, message: result });
+      res.json(result);
     })
     .catch(err => {
-      res.json({ status: false, message: err });
+      res.json(err);
     });
+});
+
+
+router.get("/hesapla", (req, res, next) => {
+  Admin.Hesapla().then(data=>{
+    res.json(data)
+  }).catch(err=>{
+    res.json(err)
+  })
 });
 module.exports = router;

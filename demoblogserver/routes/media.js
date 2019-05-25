@@ -45,13 +45,18 @@ router.get("/", (req, res, next) => {
 });
 /* Yeni Media Ekleme */
 router.post("/newmedia", (req, res, next) => {
-  const { userId, mediaType, mediaDetails, isFake } = req.body;
+  const { userId, mediaType, mediaTitle,mediaUrl, isFake } = req.body;
+  const mediaDetails = {
+     mediaTitle,
+     mediaUrl
+  }
   const params = {
     userId,
-    mediaType,
+    mediaType:parseInt(mediaType),
     mediaDetails,
-    isFake
+    isFake:isFake != '' ? isFake : undefined
   };
+  console.log('params',params)
   Media.addMedia(params)
     .then(data => {
       res.json(data);
@@ -102,6 +107,7 @@ router.get("/viewmediaaction/:actionType/:mediaId", (req, res, next) => {
 /* Media için comment Atma */
 router.post("/media/comment", (req, res, next) => {
   const { userId, mediaId, comment } = req.body;
+  console.log('Comment',req.body);
   Media.addMediaComment(userId, mediaId, comment)
     .then(result => {
       res.json(result);

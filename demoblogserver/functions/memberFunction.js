@@ -69,7 +69,7 @@ const MemberDetailsRegister = async params => {
     const registerPromise = await registerUserDetails.save();
     return { status: true, data: registerPromise };
   } catch (err) {
-    return { status:false, data: err };
+    return { status: false, data: err };
   }
 };
 /**
@@ -92,7 +92,6 @@ const MemberDetailsRegister = async params => {
  * } Register
  */
 const Register = async params => {
-
   const Register = {
     userName: params.userName,
     email: params.email,
@@ -109,12 +108,13 @@ const Register = async params => {
   };
 
   return new Promise(async (resolve, reject) => {
-    try {     
-      if(typeof params !='object') reject({status:false,data:'Obje Türünde Data Gönderiniz'})
+    try {
+      if (typeof params != "object")
+        reject({ status: false, data: "Obje Türünde Data Gönderiniz" });
       const registerUser = await MemberRegister(Register);
       if (!registerUser.status)
         reject({ status: registerUser.status, data: registerUser.data });
-      DetailsRegister.userId = registerUser.data._id;    
+      DetailsRegister.userId = registerUser.data._id;
       const registerUserDetails = await MemberDetailsRegister(DetailsRegister);
       if (registerUserDetails.status) {
         const resultData = {
@@ -153,7 +153,7 @@ const Register = async params => {
  *   }
  */
 const Login = async params => {
-  console.log('params',params)
+  console.log("params", params);
   return new Promise(async (resolve, reject) => {
     try {
       let result;
@@ -161,7 +161,7 @@ const Login = async params => {
         result = await Member.findOne({ userName: params.userName });
       } else {
         result = await Member.findOne({ email: params.userName });
-      }      
+      }
       if (result) {
         if (result.password === params.password) {
           resolve({
@@ -210,7 +210,7 @@ const LostPassword = async userName => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await Member.findOne({ userName });
-      console.log('result',result);
+      console.log("result", result);
       if (result) {
         resolve({
           status: true,
@@ -240,27 +240,26 @@ const MemberView = async userId => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await Member.findById(userId);
-     
+
       if (result) {
-        let data =  {
+        let data = {
           userId: result._id,
           userName: result.userName,
-          email: result.email,         
-        }
-        const resultdetails = await MemberDetails.findOne({userId});
-        if(resultdetails){
-          data.fullName=resultdetails.fullName;
+          email: result.email
+        };
+        const resultdetails = await MemberDetails.findOne({ userId });
+        if (resultdetails) {
+          data.fullName = resultdetails.fullName;
           data.pointCount = resultdetails.pointCount;
           data.mediaCount = resultdetails.mediaCount;
           data.commentCount = resultdetails.commentCount;
           resolve(data);
-        }else{
+        } else {
           reject({
             status: false,
             data: "Kullanıcı bulunamadı"
           });
         }
-
       } else {
         reject({
           status: false,
@@ -274,10 +273,42 @@ const MemberView = async userId => {
       });
     }
   });
-}
+};
+
+const AllMember = async () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const members = await Member.find({});
+      let users = [];
+      for (const key in members) {
+        if (members.hasOwnProperty(key)) {
+          const user = members[key];
+
+          const userdetails = await MemberDetails.findOne({ userId: user._id });
+     
+          const userobje = {
+            userId:user._id,
+            userName:user.userName,
+            email:user.email,
+            fullName: userdetails.fullName,
+            pointCount: userdetails.pointCount,
+            mediaCount: userdetails.mediaCount,
+            commentCount: userdetails.commentCount
+          };
+
+          users.push(userobje);
+        }
+      }
+      resolve({ status: true, data: users });
+    } catch (error) {
+      reject({ status: false, data: error });
+    }
+  });
+};
 module.exports = {
   Register,
   Login,
   LostPassword,
-  MemberView
+  MemberView,
+  AllMember
 };

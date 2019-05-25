@@ -1,13 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+/**
+ * @mediaType{
+ *  0 : Text,
+ *  1 : Photo,
+ *  2 : Video
+ * }
+ */
 const MediaSchema = new Schema({
   userId: Schema.Types.ObjectId,
   mediaType: {
     type: Number,
     default: 0
   },
-  mediaDetails: Object,
+  mediaDetails: {
+    mediaTitle:String,
+    mediaUrl:String
+  },
   isFake: {
     type: Boolean,
     default: false
