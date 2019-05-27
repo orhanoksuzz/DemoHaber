@@ -305,6 +305,7 @@ const AllMember = async () => {
     }
   });
 };
+
 module.exports = {
   Register,
   Login,

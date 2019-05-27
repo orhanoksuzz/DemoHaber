@@ -1,5 +1,8 @@
 const Comments = require("../models/Comments");
 const CommentsActions = require("../models/CommentsActions");
+const {Record} = require('immutable');
+
+
 /**
  *  Add Comment
  * @param {
@@ -146,6 +149,29 @@ const getMemberComments = async (userId) => {
     }
   });
 };
+const getMemberCommentAction = async (userId ) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await CommentsActions.find({      
+        userId
+      });
+
+      if (result) {
+        resolve({ status: true, data: result });
+      } else {
+        reject({
+          status: false,
+          data: "Kullanıcıya Ait Comment Actions Kaydı Bulunamadı"
+        });
+      }
+    } catch (err) {
+      reject({
+        status: false,
+        data: err
+      });
+    }
+  });
+};
 /**
  *  Get Comment Action
  * @param {
@@ -213,8 +239,9 @@ const AllCommetsActions = async (userId) =>{
           let comment={};
           comment.commentId = commentlist[key]._id;         
           const result = await AllCommetsAction(comment.commentId);
-          comment.data = result.data;
+          comment.data = result.data
           allcomment.push(comment);
+        
         }
       }    
       resolve({ status: true, data: allcomment });    
@@ -231,6 +258,7 @@ module.exports = {
   getComments,
   getMemberComments,
   getCommentAction,
+  getMemberCommentAction,
   AllComments,
   AllCommetsActions
 };
