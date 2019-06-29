@@ -1,3 +1,42 @@
+const Sequelize = require("sequelize");
+const db = require('../helper/sequelize');
+/**
+ * @actionType
+ * 0:'Up',
+ * 1:'Down',
+ * 2:'report',
+
+ */
+module.exports= db.sequelize.define("commentsactions", {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  userId: {
+    type: Sequelize.INTEGER,
+
+  },
+  commentId: {
+    type: Sequelize.INTEGER
+  },
+  actionType: { type: Sequelize.INTEGER, defaultValue: 0 },
+  createdTime: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  },
+  updatedTime: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  }
+},
+{
+  timestamps:false
+});
+
+
+
+/*
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 /**
@@ -7,7 +46,8 @@ const Schema = mongoose.Schema;
  * 2:'report',
 
  */
-const CommentsActionSchema = new Schema({
+/*
+ const CommentsActionSchema = new Schema({
   userId: Schema.Types.ObjectId,
 
   commentId: Schema.Types.ObjectId,
@@ -26,3 +66,4 @@ const CommentsActionSchema = new Schema({
 });
 
 module.exports = mongoose.model("commentsactions", CommentsActionSchema);
+*/

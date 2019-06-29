@@ -1,3 +1,58 @@
+const Sequelize = require("sequelize");
+const db = require('../helper/sequelize');
+/**
+ * @mediaType
+ * 0:'Media',
+ * 1:'Blog'
+ */
+module.exports= db.sequelize.define("comments", {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  userId: {
+    type: Sequelize.INTEGER
+  },
+  mediaId: {
+    type: Sequelize.INTEGER
+  },
+  mediaType: {
+    type: Sequelize.INTEGER,
+    default: 0
+  },
+
+  comments: {
+    type: Sequelize.STRING
+  },
+  upCount: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  downCount: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  reportCount: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+
+  createdTime: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  },
+  updatedTime: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  }
+},
+{
+  timestamps:false
+});
+
+
+/*
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 /**
@@ -5,7 +60,8 @@ const Schema = mongoose.Schema;
  * 0:'Media',
  * 1:'Blog'
  */
-const CommentsSchema = new Schema({
+/*
+ const CommentsSchema = new Schema({
   userId: Schema.Types.ObjectId,
   mediaType: {
     type: Number,
@@ -36,3 +92,4 @@ const CommentsSchema = new Schema({
 });
 
 module.exports = mongoose.model("comments", CommentsSchema);
+*/

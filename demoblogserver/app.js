@@ -13,7 +13,7 @@ const authRouter = require("./routes/auth");
 
 const app = express();
 // db connection
-const db = require("./helper/db.js")();
+//const db = require("./helper/db.js")();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");

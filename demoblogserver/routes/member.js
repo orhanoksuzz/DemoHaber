@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Member = require('../functions/index');
+const Member = require('../functions/sqeuelize/index');
 
 /* GET users listing. */
 router.get("/", (req, res, next) => {

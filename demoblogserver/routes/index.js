@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Admin = require('../functions/index');
+const Admin = require('../functions/sqeuelize/index');
 
 router.get("/", (req, res, next) => {
   res.render("index", { title: "Api Anasayfa" });

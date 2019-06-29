@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Media = require("../functions/index");
+const Media = require("../functions/sqeuelize/index");
 /*
 const events = require('events');
 const eventEmitter = events.EventEmitter;
@@ -54,7 +54,7 @@ router.post("/newmedia", (req, res, next) => {
     userId,
     mediaType:parseInt(mediaType),
     mediaDetails,
-    isFake:isFake != '' ? isFake : undefined
+    isFake:isFake != '' ? isFake : false
   };
   console.log('params',params)
   Media.addMedia(params)
@@ -118,7 +118,7 @@ router.post("/media/comment", (req, res, next) => {
 });
 /* Media Comments yapanları Listeleme */
 router.get("/viewmediacomment/:mediaId", (req, res, next) => {
-  Media.getMediaAction(req.params.mediaId, 5)
+  Media.getComments(req.params.mediaId, 0)
     .then(data => {
       res.json(data);
     })

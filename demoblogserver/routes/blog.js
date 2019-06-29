@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Blog = require("../functions/index"); // Blog Fonksiyonlarının dahil edilmesi
+const Blog = require("../functions/sqeuelize/index"); // Blog Fonksiyonlarının dahil edilmesi
 router.get("/", (req, res, next) => {
   res.render("index", { title: "Blog Page" });
 });
@@ -67,7 +67,7 @@ router.post("/blog/comment", (req, res, next) => {
 });
 /* Blog yazısı Comments yapanları Listeleme */
 router.get("/viewblogcomment/:blogId", (req, res, next) => {
-  Blog.getBlogAction(req.params.blogId, 4)
+  Blog.getComments(req.params.blogId, 1)
     .then(data => {
       res.json(data);
     })

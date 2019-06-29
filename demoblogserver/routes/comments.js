@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Comment = require('../functions/index');
+const Comment = require("../functions/sqeuelize/index");
 
 
 router.get('/', (req, res, next)=> {
@@ -27,8 +27,8 @@ router.get("/viewcomments/:mediaId/:mediaType", (req, res, next) => {
     });
 });
 /* Kullanıcı Yorumlarını öğrenme */
-router.get("/viewusercomment/:userId/:mediaType", (req, res, next) => {
-  Comment.getMemberComments(req.params.userId,req.params.mediaType)
+router.get("/viewusercomment/:userId", (req, res, next) => {
+  Comment.getMemberComments(req.params.userId)
     .then(data => {
       res.json(data);
     })

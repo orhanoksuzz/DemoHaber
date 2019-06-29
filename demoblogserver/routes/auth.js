@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Auth = require("../functions/index"); // Auth fonksiyonlarının dahil edilmesi
+const Auth = require("../functions/sqeuelize/index"); // Auth fonksiyonlarının dahil edilmesi
 
 router.get("/", (req, res, next) => {
   res.render("index", { title: "Auth Page" });
