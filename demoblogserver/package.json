@@ -12,7 +12,7 @@
     "http-errors": "~1.6.2",
     "immutable": "^4.0.0-rc.12",
     "jade": "~1.11.0",
-    "mongoose": "^5.5.8",
+    "mongoose": "^5.7.5",
     "morgan": "~1.9.0",
     "mysql2": "^1.6.5",
     "sequelize": "^5.8.12"
